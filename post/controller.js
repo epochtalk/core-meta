@@ -10,6 +10,7 @@ controller.onDel = function(key) {
   // Call decrementPostCount(parentKey);
 };
 
+// TODO: extract these out to a general "increment" method?
 controller.incrementPostCount = function(key) {
   // Lock
   // Get postCount for key
