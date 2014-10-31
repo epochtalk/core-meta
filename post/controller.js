@@ -9,22 +9,3 @@ controller.onDel = function(key) {
   // Don't create new post metadata for the key
   // Call decrementPostCount(parentKey);
 };
-
-// TODO: extract these out to a general "increment" method?
-controller.incrementPostCount = function(key) {
-  // Lock
-  // Get postCount for key
-  // Add 1 to the post Count
-  // Put the postCount to the key
-  // Release
-  // Call incrementPostCount(parentKey);
-};
-
-controller.decrementPostCount = function(key) {
-  // Lock
-  // Get postCount for key
-  // Subtract 1 to the post Count
-  // Put the postCount to the key
-  // Release
-  // Call decrementPostCount(parentKey);
-};
