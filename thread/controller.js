@@ -2,7 +2,7 @@ var controller = module.exports = {};
 
 // On put/del
 controller.onPut = function(key) {
-  // Create new thread metadata for the key
+  // Initialize new metadata for the key from model
 };
 controller.onDel = function(key) {
   // Delete the thread metadata for the key
