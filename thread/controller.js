@@ -8,6 +8,8 @@ controller.onDel = function(key) {
   // Delete the thread metadata for the key
 };
 
+// Calculation methods may not be necessary
+// if re-running all updates on start
 controller.calculateFirstPost = function(key) {
   // Get one element (use index)
 };
