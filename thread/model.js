@@ -1,6 +1,6 @@
-module.exports = {
-  // field: default
-  firstPost: null,
-  lastPost: null,
-  postCount: 0
+module.exports = function() {
+  // field = default
+  this.firstPost = null;
+  this.lastPost = null;
+  this.postCount = 0;
 };
