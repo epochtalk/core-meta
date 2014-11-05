@@ -29,7 +29,7 @@ Operations.updateValue = function(options) {
   var key = options.key;
   var lock = vault.getLock(key);
   lock.runwithlock(function() {
-    Options.getValue({key: options.key, callback: function(err, value) {
+    Operations.getValue({key: options.key, callback: function(err, value) {
       options.update({value: value, callback: function() {
         // Put the new value to the key
         var rows = [];
