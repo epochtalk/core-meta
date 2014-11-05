@@ -1,3 +1,5 @@
+var path = require('path');
+var vault = require(path.join(__dirname, 'vault'));
 var Operations = module.exports = {};
 var tree;
 
@@ -17,41 +19,25 @@ Operations.getParentKey = function(options) {
 
 // options: key, callback
 Operations.getValue = function(options) {
-  var q = {gt: options.key.concat(null), lt: options.key.concat(undefined), limit: 1};
-  var value = null;
-  tree.roots.createReadStream(q).on('data', function(ch) {
-    // Get the original value
-    value = ch.value;
-  }).on('end', function() {
-    options.callback(value);
+  // TODO: createReadStream here
+  tree.meta.get(options.key, function(err, value) {
+    options.callback(err, value);
   });
 };
 
 Operations.updateValue = function(options) {
-  var q = {gt: options.key.concat(null), lt: options.key.concat(undefined), limit: 1};
-  var value = null;
-  tree.roots.createReadStream(q).on('data', function(ch) {
-    // Get the original value
-    value = ch.value;
-  }).on('end', function() {
-    // Update the value
-    options.update({value: value, callback: function(){
-      // Put the new value to the key
-      var rows = [];
-      rows.push({type: 'put', key: key, value: value});
-      self.tree.meta.batch(rows, function() {
-        // Recurse if necessary
-        if (options.recursive) {
-          // Get parentKey
-          Operations.getParentKey({key: key, callback: function(parentKey) {
-            // Recurse
-            if (parentKey) {
-              options.key = parentKey;
-              Operations.add(options);
-            }
-          }});
-        }
-      });
+  var key = options.key;
+  var lock = vault.getLock(key);
+  lock.runwithlock(function() {
+    Options.getValue({key: options.key, callback: function(err, value) {
+      options.update({value: value, callback: function() {
+        // Put the new value to the key
+        var rows = [];
+        rows.push({type: 'put', key: key, value: value});
+        tree.meta.batch(rows, function() {
+          lock.release();
+        });
+      }});
     }});
   });
 };
