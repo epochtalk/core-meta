@@ -1,11 +1,11 @@
 var path = require('path');
-var Operations = require(path.join(__dirname, 'operations'));
 var trigger = require('level-trigger');
 
-var Meta = module.exports = function(tree, controllers) {
+var Meta = module.exports = function(tree, controllers, operations) {
   var self = this;
   self.tree = tree;
-  Operations.init(tree);
+  self.operations = operations;
+  self.operations.init(tree);
   self.controllers = controllers;
   trigger(tree.db, 'metadata-trigger', function(ch) {
     var key = ch.key;
@@ -61,7 +61,7 @@ var Meta = module.exports = function(tree, controllers) {
 Meta.prototype.get = function(options) {
   var self = this;
   var key = options.key;
-  Operations.getValue({key: options.key, callback: function(err, value) {
+  self.operations.getValue({key: options.key, callback: function(err, value) {
     options.callback(err, value[options.field]);
   }});
 };
