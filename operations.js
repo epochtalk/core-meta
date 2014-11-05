@@ -1,11 +1,11 @@
 var Operations = module.exports = {};
 var tree;
 
-Operations.init(tree) {
-  tree = tree;
+Operations.init = function(inputTree) {
+  tree = inputTree;
 };
 
-Operations.getParentKey(options) {
+Operations.getParentKey = function(options) {
   var q = {gt: options.key.concat(null), lt: options.key.concat(undefined), limit: 1};
   var parentKey = null;
   tree.roots.createReadStream(q).on('data', function(ch) {
@@ -16,7 +16,7 @@ Operations.getParentKey(options) {
 };
 
 // options: key, callback
-Operations.getValue(options) {
+Operations.getValue = function(options) {
   var q = {gt: options.key.concat(null), lt: options.key.concat(undefined), limit: 1};
   var value = null;
   tree.roots.createReadStream(q).on('data', function(ch) {
@@ -27,7 +27,7 @@ Operations.getValue(options) {
   });
 };
 
-Operations.updateValue(options) {
+Operations.updateValue = function(options) {
   var q = {gt: options.key.concat(null), lt: options.key.concat(undefined), limit: 1};
   var value = null;
   tree.roots.createReadStream(q).on('data', function(ch) {
