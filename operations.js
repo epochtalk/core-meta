@@ -37,7 +37,32 @@ Operations.updateValue = function(options) {
         var rows = [];
         rows.push({type: 'put', key: key, value: value});
         tree.meta.batch(rows, function() {
-          lock.release();
+          // Recurse
+          if (options.recursive) {
+            var recursiveOptions = options;
+            // Add lock to array
+            if (!Array.isArray(recursiveOptions.locks)) {
+              recursiveOptions.locks = [];
+            }
+            recursiveOptions.locks.push(lock);
+            Operations.getParentKey({key: key, callback: function(parentKey) {
+              if (parentKey) {
+                recursiveOptions.key = parentKey;
+                Operations.updateValue(recursiveOptions);
+              }
+              else {
+                // Release all locks
+                recursiveOptions.locks.forEach(function(lock) {
+                  lock.release();
+                });
+              }
+            }});
+          }
+          else {
+            // if not recursive, release the lock
+            // there is no parent or child
+            lock.release();
+          }
         });
       }});
     }});
