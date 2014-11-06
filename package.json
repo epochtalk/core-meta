@@ -3,8 +3,8 @@
   "repository": {
     "type": "git"
   },
-  "name": "metatreedb",
-  "description": "An implementation of metatada controllers and operations in treedb",
+  "name": "epochmeta",
+  "description": "An implementation of metatada controllers and operations in treedb for EpochTalk",
   "main": "index.js",
   "author": "Bronson Oka <boka@slickage.com>",
   "dependencies": {
