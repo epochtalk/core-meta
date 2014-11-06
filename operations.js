@@ -7,6 +7,7 @@ Operations.init = function(inputTree) {
   tree = inputTree;
 };
 
+// options: key, callback(parentKey)
 Operations.getParentKey = function(options) {
   var q = {gt: options.key.concat(null), lt: options.key.concat(undefined), limit: 1};
   var parentKey = null;
@@ -17,7 +18,7 @@ Operations.getParentKey = function(options) {
   });
 };
 
-// options: key, callback
+// options: key, callback(err, value)
 Operations.getValue = function(options) {
   // TODO: createReadStream here
   tree.meta.get(options.key, function(err, value) {
@@ -25,6 +26,7 @@ Operations.getValue = function(options) {
   });
 };
 
+// options: key, recursive, worker({value, callback})
 Operations.updateValue = function(options) {
   var key = options.key;
   var lock = vault.getLock(key);
