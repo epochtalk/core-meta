@@ -32,7 +32,7 @@ Operations.updateValue = function(options) {
   var lock = vault.getLock(key);
   lock.runwithlock(function() {
     Operations.getValue({key: options.key, callback: function(err, value) {
-      options.update({value: value, callback: function() {
+      options.worker({value: value, callback: function() {
         // Put the new value to the key
         var rows = [];
         rows.push({type: 'put', key: key, value: value});
@@ -58,11 +58,10 @@ Operations.decrement = function(options) {
 
 // options: key, field, increment, recursive, callback
 Operations.add = function(options) {
-  // Lock
-  Operations.updateValue({key: options.key, update: function(updateOptions) {
+  options.worker = function(updateOptions) {
     // Add to the value
     updateOptions.value[options.field] += options.increment;
     updateOptions.callback(updateOptions.value);
-  }});
-  // Release lock
+  };
+  Operations.updateValue(options);
 };
