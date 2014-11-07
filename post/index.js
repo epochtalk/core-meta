@@ -1,8 +1,8 @@
 var path = require('path');
 var Operations = require(path.join(__dirname, '..', 'operations'));
 module.exports = {
-  onPut: function(key) {
-    Operations.getParentKey({key: key, callback: function(parentKey) {
+  onPut: function(options) {
+    Operations.getParentKey({key: options.key, callback: function(parentKey) {
       // Call increment on parentKey's postCount
       Operations.increment({
         key: parentKey,
@@ -11,8 +11,8 @@ module.exports = {
       });
     }});
   },
-  onDel: function(key, tree) {
-    Operations.getParentKey({key: key, callback: function(parentKey) {
+  onDel: function(options) {
+    Operations.getParentKey({key: options.key, callback: function(parentKey) {
       // Call decrement on parentKey's postCount
       Operations.decrement({
           key: parentKey,
