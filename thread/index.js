@@ -6,7 +6,7 @@ module.exports = {
       // Call increment on parentKey's postCount
       Operations.increment({
         key: parentKey,
-        field: 'threadCount',
+        field: 'thread_count',
         recursive: true
       });
     }});
@@ -16,7 +16,7 @@ module.exports = {
       // Call decrement on parentKey's postCount
       Operations.decrement({
           key: parentKey,
-          field: 'threadCount',
+          field: 'thread_count',
           recursive: true
       });
     }});
