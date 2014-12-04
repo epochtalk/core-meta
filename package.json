@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "name": "meta",
+  "name": "epoch-core-meta",
   "description": "An implementation of metatada controllers and operations in treedb for EpochTalk",
   "main": "index.js",
   "author": "Bronson Oka <boka@slickage.com>",
