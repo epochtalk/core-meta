@@ -7,7 +7,8 @@ module.exports = {
       Operations.increment({
         key: parentKey,
         field: 'post_count',
-        recursive: true
+        recursive: true,
+        callback: options.callback
       });
     }});
   },
@@ -15,9 +16,10 @@ module.exports = {
     Operations.getParentKey({key: options.key, callback: function(parentKey) {
       // Call decrement on parentKey's postCount
       Operations.decrement({
-          key: parentKey,
-          field: 'post_count',
-          recursive: true
+        key: parentKey,
+        field: 'post_count',
+        recursive: true,
+        callback: options.callback
       });
     }});
   }
