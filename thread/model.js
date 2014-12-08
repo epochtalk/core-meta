@@ -6,8 +6,4 @@ module.exports = function() {
   this.post_count = 0;
   this.last_post_username = '';
   this.last_post_created_at = '';
-  // First post
-  this.title = '';
-  this.user = {username: ''};
-  this.first_post_id = '';
 };
